@@ -1,3 +1,7 @@
+const showSpinner = () => document.getElementById("spinner").classList.remove("hidden");
+const hideSpinner = () => document.getElementById("spinner").classList.add("hidden");
+
+
 fetch("https://openapi.programming-hero.com/api/categories")
 .then(res => res.json())
 .then(data => displaycategory(data.categories))    
@@ -6,6 +10,7 @@ const displaycati = () =>{
         child.classList.remove("active");
         });
         document.getElementById("alltree").classList.add("active");
+        showSpinner();
         fetch(`https://openapi.programming-hero.com/api/categories`)
         .then(res => res.json())
         .then(data => {
@@ -13,8 +18,10 @@ const displaycati = () =>{
                 baxo= document.getElementById("catcenter");
                 baxo.innerHTML = "";
                 listclikedall(category.id);
+            
             });
-        });
+            hideSpinner();
+        }).catch(() => hideSpinner());
 };
 const displaycategory = categories =>{
     
@@ -50,25 +57,39 @@ const displaycategory = categories =>{
 });
 
 }
-const listclikedall = (id) =>{
-    fetch(`https://openapi.programming-hero.com/api/category/${id}`)
+
+const listclikedall = (id) => {
+  showSpinner();
+  fetch(`https://openapi.programming-hero.com/api/category/${id}`)
     .then(res => res.json())
-    .then(data => displaycatitemsall(data.plants) )
-}
-const listcliked = (id) =>{
-    fetch(`https://openapi.programming-hero.com/api/category/${id}`)
+    .then(data => {
+      displaycatitemsall(data.plants);
+      hideSpinner();
+    })
+    .catch(() => hideSpinner());
+};
+
+const listcliked = (id) => {
+  showSpinner();
+  fetch(`https://openapi.programming-hero.com/api/category/${id}`)
     .then(res => res.json())
-    .then(data => displaycatitems(data.plants) )
-}
+    .then(data => {
+      displaycatitems(data.plants);
+      hideSpinner();
+    })
+    .catch(() => hideSpinner());
+};
+
+
 const displaycatitems = (data) =>{
-    baxo= document.getElementById("catcenter");
+    const baxo= document.getElementById("catcenter");
     baxo.innerHTML = "";
     data.forEach(item =>{
         
          let dibba = document.createElement('div');
          dibba.innerHTML = `
           <div class="h-[400px] bg-white p-2 flex flex-col hover:shadow-lg hover:scale-[1.1] duration-300">
-             <img class="h-[50%] w-full"src=${item.image} alt="" srcset="">
+             <img class="h-[50%] w-full rounded-2xl"src=${item.image} alt="" srcset="">
              <p class="font-bold">${item.name}</p>
              <div class="h-[80px]"><p class="overflow-ellipsis text-[10px] font-light">${item.description}</p></div>
              <div class="flex justify-between">
@@ -83,14 +104,14 @@ const displaycatitems = (data) =>{
     })
 }
 const displaycatitemsall = (data) =>{
-    baxo= document.getElementById("catcenter");
+    const baxo= document.getElementById("catcenter");
    
     data.forEach(item =>{
         
          let dibba = document.createElement('div');
          dibba.innerHTML = `
           <div class="h-[400px] bg-white p-2 flex flex-col hover:shadow-lg hover:scale-[1.1] duration-300">
-             <img class="h-[50%] w-full"src=${item.image} alt="" srcset="">
+             <img class="h-[50%] w-full rounded-2xl"src=${item.image} alt="" srcset="">
              <p class="font-bold">${item.name}</p>
               <div class="h-[80px]"><p class="overflow-ellipsis text-[10px] font-light">${item.description}</p></div>
              <div class="flex justify-between">
@@ -102,7 +123,7 @@ const displaycatitemsall = (data) =>{
         `
         baxo.append(dibba);
        dibba.children[0].children[4].addEventListener("click", ()=>{
-              console.log(item.price); 
+             
        });
        
        
