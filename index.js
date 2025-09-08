@@ -95,8 +95,8 @@ const displaycategory = categories =>{
     
     let box = document.createElement('div');
     box.innerHTML = `
-        <div class="py-2 pl-2  hover:cursor-pointer hover:font-bold">
-            <p class"">${category.category_name}</p>
+        <div class="py-2 pl-2 mb-2 hover:cursor-pointer hover:font-bold md:hover:border-2  border-2 border-[#15803D] rounded-2xl md:border-0 m-2 md:my-1 duration-500">
+            <p class="">${category.category_name}</p>
         </div>
     `;
     categoryContainer.append(box);
