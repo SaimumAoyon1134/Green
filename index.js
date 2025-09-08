@@ -63,9 +63,11 @@ fetch("https://openapi.programming-hero.com/api/categories")
 
 const displaycati = () => {
     Array.from(categoryContainer.children).forEach(child => {
-        child.classList.remove("active");
+        console.log(child.children[0]);
+        child.children[0].classList.remove("active");
     });
-    document.getElementById("alltree").classList.add("active");
+     document.getElementById("alltree").children[0].classList.add("active");
+     
     showSpinner();
     fetch(`https://openapi.programming-hero.com/api/categories`)
         .then(res => res.json())
@@ -81,7 +83,7 @@ const displaycati = () => {
 
 const displaycategory = (categories) => {
     categoryContainer = document.getElementById("list");
-    document.getElementById("alltree").classList.add("active");
+    document.getElementById("alltree").children[0].classList.add("active");
     displaycati();
 
     document.getElementById("alltree").addEventListener("click", () => {
@@ -98,9 +100,10 @@ const displaycategory = (categories) => {
         categoryContainer.append(box);
         box.addEventListener("click", () => {
             Array.from(categoryContainer.children).forEach(child => {
-                child.classList.remove("active");
+                console.log(child.children[0])
+                child.children[0].classList.remove("active");
             });
-            box.classList.add("active");
+            box.children[0].classList.add("active");
             listcliked(category.id);
         });
     });
